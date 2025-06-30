@@ -1,9 +1,14 @@
 import express from "express";
-import { listarProdutos, criarProduto } from "../controllers/produtosController";
+import {
+  listarProdutos,
+  atualizarProduto,
+  criarProduto,
+} from "../controllers/produtosController";
 
 const router = express.Router();
 
 router.get("/produtos", listarProdutos);
 router.post("/produtos", criarProduto);
+router.put("/produtos", atualizarProduto);
 
 export default router;

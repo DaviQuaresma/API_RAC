@@ -1,5 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
+import { getConfiguredToken } from "../utils/config";
 
 dotenv.config();
 
@@ -8,9 +9,11 @@ let accessToken: string | null = null;
 export async function getAccessToken(): Promise<string> {
   if (accessToken !== null) return accessToken;
 
+  const personalToken = getConfiguredToken();
+
   const payload = {
     grant_type: "personal",
-    personal_token: process.env.EGESTOR_PERSONAL_TOKEN,
+    personal_token: personalToken,
   };
 
   const headers = {
