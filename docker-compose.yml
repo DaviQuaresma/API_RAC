@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  empresa_a:
+    build: .
+    container_name: api_rac_empresa_a
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/empresa_a.json:/app/config/config.json
+
+  # empresa_b:
+  #   build: .
+  #   container_name: api_rac_empresa_b
+  #   ports:
+  #     - "3001:3000"
+  #   volumes:
+  #     - ./config/empresa_b.json:/app/config/config.json

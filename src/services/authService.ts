@@ -4,11 +4,10 @@ import { getConfiguredToken } from "../utils/config";
 
 dotenv.config();
 
-let accessToken: string | null = null;
+// Remova o cache por enquanto
+// let accessToken: string | null = null;
 
 export async function getAccessToken(): Promise<string> {
-  if (accessToken !== null) return accessToken;
-
   const personalToken = getConfiguredToken();
 
   const payload = {
@@ -27,7 +26,7 @@ export async function getAccessToken(): Promise<string> {
       { headers }
     );
 
-    accessToken = response.data.access_token;
+    const accessToken = response.data.access_token;
 
     if (!accessToken) {
       throw new Error("Token de acesso não foi retornado pela API");

@@ -48,7 +48,10 @@ export async function listarProdutos(
       }
     );
 
-    res.status(200).json(response.data);
+    // Garanta que você está retornando apenas o array de produtos
+    const produtos = response.data?.data || [];
+
+    res.status(200).json(produtos);
   } catch (error: any) {
     console.error(
       "[Erro ao listar produtos]",
@@ -104,12 +107,19 @@ export async function atualizarProduto(
 ): Promise<any> {
   try {
     const token = await getAccessToken();
-
-    const { codigo, ...produtoAlvo } = req.body;
-
+    const codigo = req.params.codigo;
+    
     if (!codigo) {
       return res.status(400).json({ error: "Código do produto é obrigatório" });
     }
+
+    // Remove o campo 'codigo' do corpo da requisição
+    const { codigo: _, ...produtoAlvo } = req.body;
+    
+    console.log(`${process.env.EGESTOR_API_URL}/v1/produtos/${codigo}`);
+    console.log("Codigo: ", codigo);
+    console.log("ProdutoAlvo: ", produtoAlvo);
+    console.log(token);
 
     const response = await axios.put(
       `${process.env.EGESTOR_API_URL}/v1/produtos/${codigo}`,

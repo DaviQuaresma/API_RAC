@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get("/produtos", listarProdutos);
 router.post("/produtos", criarProduto);
-router.put("/produtos", atualizarProduto);
+router.put("/produtos/:codigo", atualizarProduto);
 
 export default router;
