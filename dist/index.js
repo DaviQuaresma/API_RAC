@@ -9,6 +9,8 @@ const produtosRoutes_1 = __importDefault(require("./routes/produtosRoutes"));
 const validacaoRoutes_1 = __importDefault(require("./routes/validacaoRoutes"));
 const vendaRoutes_1 = __importDefault(require("./routes/vendaRoutes"));
 const tokenRoutes_1 = __importDefault(require("./routes/tokenRoutes"));
+const fallbackRoutes_1 = __importDefault(require("./routes/fallbackRoutes"));
+require("./jobs/fallbackScheduler");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -16,6 +18,7 @@ app.use("/api", produtosRoutes_1.default);
 app.use("/api", validacaoRoutes_1.default);
 app.use("/api", vendaRoutes_1.default);
 app.use("/api", tokenRoutes_1.default);
+app.use("/api", fallbackRoutes_1.default);
 app.get("/health", (_, res) => {
     res.status(200).send("API Middleware online");
 });

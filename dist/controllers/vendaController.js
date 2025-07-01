@@ -12,7 +12,7 @@ async function criarVenda(req, res) {
     try {
         const token = await (0, authService_1.getAccessToken)();
         const vendaPayload = req.body;
-        console.log("📦 Payload recebido:", JSON.stringify(req.body, null, 2));
+        console.log(" Payload recebido:", JSON.stringify(req.body, null, 2));
         // Validação mínima
         if (!vendaPayload.codContato || !vendaPayload.produtos?.length) {
             return res.status(400).json({

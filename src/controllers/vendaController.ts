@@ -11,7 +11,7 @@ export async function criarVenda(req: Request, res: Response): Promise<any> {
 
     const vendaPayload = req.body;
 
-    console.log("📦 Payload recebido:", JSON.stringify(req.body, null, 2));
+    console.log(" Payload recebido:", JSON.stringify(req.body, null, 2));
 
     // Validação mínima
     if (!vendaPayload.codContato || !vendaPayload.produtos?.length) {

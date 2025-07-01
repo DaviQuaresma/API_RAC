@@ -1,31 +1,8 @@
 import { Request, Response } from "express";
-import axios from "axios";
 import { getAccessToken } from "../services/authService";
-import { z } from "zod";
-
-const ProdutoSchema = z.object({
-  descricao: z.string(),
-  codigoProprio: z.string().optional(),
-  codCategoria: z.number(),
-  estoque: z.number(),
-  estoqueMinimo: z.number(),
-  controlarEstoque: z.boolean(),
-  margemLucro: z.number(),
-  precoCusto: z.number(),
-  precoVenda: z.number(),
-  origemFiscal: z.number(),
-  unidadeTributada: z.string(),
-  refEanGtin: z.string().optional(),
-  ncm: z.string().optional(),
-  codigoCEST: z.string().optional(),
-  excecaoIPI: z.number(),
-  codigoGrupoTributos: z.number(),
-  anotacoesNFE: z.string().optional(),
-  anotacoesInternas: z.string().optional(),
-  pesoBruto: z.number(),
-  pesoLiquido: z.number(),
-  tags: z.array(z.string()).optional(),
-});
+import axiosInstance from "../services/axiosInstance";
+import { salvarFallback } from "../utils/fallback";
+import { ProdutoSchema } from "../schemas/produtoSchema";
 
 export async function listarProdutos(
   req: Request,
@@ -33,13 +10,13 @@ export async function listarProdutos(
 ): Promise<any> {
   try {
     const token = await getAccessToken();
+    const query = new URLSearchParams({
+      limit: "1000",
+      ...(req.query as Record<string, string>),
+    }).toString();
 
-    const params = new URLSearchParams(
-      req.query as Record<string, string>
-    ).toString();
-
-    const response = await axios.get(
-      `${process.env.EGESTOR_API_URL}/v1/produtos?${params}`,
+    const { data } = await axiosInstance.get(
+      `${process.env.EGESTOR_API_URL}/v1/produtos?${query}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,16 +25,14 @@ export async function listarProdutos(
       }
     );
 
-    // Garanta que você está retornando apenas o array de produtos
-    const produtos = response.data?.data || [];
-
-    res.status(200).json(produtos);
+    const produtos = data?.data || data || [];
+    return res.status(200).json(produtos);
   } catch (error: any) {
     console.error(
       "[Erro ao listar produtos]",
       error.response?.data || error.message
     );
-    res.status(error?.response?.status || 500).json({
+    return res.status(error?.response?.status || 500).json({
       error: "Erro ao buscar produtos no eGestor",
       details: error?.response?.data || null,
     });
@@ -70,14 +45,15 @@ export async function criarProduto(req: Request, res: Response): Promise<any> {
 
     const valid = ProdutoSchema.safeParse(req.body);
     if (!valid.success) {
-      return res
-        .status(400)
-        .json({ error: "Payload inválido", detalhes: valid.error.format() });
+      return res.status(400).json({
+        error: "Payload inválido",
+        detalhes: valid.error.format(),
+      });
     }
 
     const novoProduto = valid.data;
 
-    const response = await axios.post(
+    const { data } = await axiosInstance.post(
       `${process.env.EGESTOR_API_URL}/v1/produtos`,
       novoProduto,
       {
@@ -88,13 +64,14 @@ export async function criarProduto(req: Request, res: Response): Promise<any> {
       }
     );
 
-    res.status(201).json(response.data);
+    return res.status(201).json(data);
   } catch (error: any) {
     console.error(
       "[Erro ao criar produto]",
-      error?.response?.data || error?.message || error
+      error.response?.data || error.message
     );
-    res.status(error?.response?.status || 500).json({
+    salvarFallback(req.body);
+    return res.status(error?.response?.status || 500).json({
       error: "Erro ao criar produto no eGestor",
       details: error?.response?.data || null,
     });
@@ -108,20 +85,14 @@ export async function atualizarProduto(
   try {
     const token = await getAccessToken();
     const codigo = req.params.codigo;
-    
+
     if (!codigo) {
       return res.status(400).json({ error: "Código do produto é obrigatório" });
     }
 
-    // Remove o campo 'codigo' do corpo da requisição
     const { codigo: _, ...produtoAlvo } = req.body;
-    
-    console.log(`${process.env.EGESTOR_API_URL}/v1/produtos/${codigo}`);
-    console.log("Codigo: ", codigo);
-    console.log("ProdutoAlvo: ", produtoAlvo);
-    console.log(token);
 
-    const response = await axios.put(
+    const { data } = await axiosInstance.put(
       `${process.env.EGESTOR_API_URL}/v1/produtos/${codigo}`,
       produtoAlvo,
       {
@@ -132,13 +103,14 @@ export async function atualizarProduto(
       }
     );
 
-    res.status(200).json(response.data);
+    return res.status(200).json(data);
   } catch (error: any) {
     console.error(
       "[Erro ao atualizar produto]",
       error.response?.data || error.message
     );
-    res.status(error?.response?.status || 500).json({
+    salvarFallback(req.body);
+    return res.status(error?.response?.status || 500).json({
       error: "Erro ao atualizar produto no eGestor",
       details: error?.response?.data || null,
     });

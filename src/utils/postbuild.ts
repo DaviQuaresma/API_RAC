@@ -6,7 +6,7 @@ const destDir = path.resolve(__dirname, "../config");
 const destPath = path.resolve(destDir, "config.json");
 
 if (!fs.existsSync(srcPath)) {
-  console.error("❌ Arquivo config.json de origem não encontrado.");
+  console.error(" Arquivo config.json de origem não encontrado.");
   process.exit(1);
 }
 
@@ -15,4 +15,4 @@ if (!fs.existsSync(destDir)) {
 }
 
 fs.copyFileSync(srcPath, destPath);
-console.log("✅ config.json copiado para dist/config com sucesso.");
+console.log(" config.json copiado para dist/config com sucesso.");

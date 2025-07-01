@@ -8,7 +8,6 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 function getConfiguredToken() {
     const configPath = path_1.default.resolve(__dirname, "../config/config.json");
-    console.log("📄 Buscando token em:", configPath);
     if (!fs_1.default.existsSync(configPath)) {
         throw new Error("Arquivo de configuração (config.json) não encontrado.");
     }

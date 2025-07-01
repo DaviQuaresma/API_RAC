@@ -8,9 +8,14 @@ const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const config_1 = require("../utils/config");
 dotenv_1.default.config();
-// Remova o cache por enquanto
-// let accessToken: string | null = null;
+let cachedToken = null;
+let expiresAt = null;
 async function getAccessToken() {
+    const now = Date.now();
+    // Se o token ainda é válido, retorna o cache
+    if (cachedToken && expiresAt && now < expiresAt) {
+        return cachedToken;
+    }
     const personalToken = (0, config_1.getConfiguredToken)();
     const payload = {
         grant_type: "personal",
@@ -21,11 +26,14 @@ async function getAccessToken() {
     };
     try {
         const response = await axios_1.default.post(`${process.env.EGESTOR_API_URL}/oauth/access_token`, payload, { headers });
-        const accessToken = response.data.access_token;
-        if (!accessToken) {
+        const { access_token, expires_in } = response.data;
+        if (!access_token) {
             throw new Error("Token de acesso não foi retornado pela API");
         }
-        return accessToken;
+        // Salva token e tempo de expiração (com margem de segurança de 5s)
+        cachedToken = access_token;
+        expiresAt = now + expires_in * 1000 - 5000;
+        return cachedToken;
     }
     catch (error) {
         console.error("[Erro ao obter token]", error.response?.data || error.message);

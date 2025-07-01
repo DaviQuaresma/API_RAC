@@ -4,10 +4,17 @@ import { getConfiguredToken } from "../utils/config";
 
 dotenv.config();
 
-// Remova o cache por enquanto
-// let accessToken: string | null = null;
+let cachedToken: string | null = null;
+let expiresAt: number | null = null;
 
 export async function getAccessToken(): Promise<string> {
+  const now = Date.now();
+
+  // Se o token ainda é válido, retorna o cache
+  if (cachedToken && expiresAt && now < expiresAt) {
+    return cachedToken;
+  }
+
   const personalToken = getConfiguredToken();
 
   const payload = {
@@ -26,13 +33,17 @@ export async function getAccessToken(): Promise<string> {
       { headers }
     );
 
-    const accessToken = response.data.access_token;
+    const { access_token, expires_in } = response.data;
 
-    if (!accessToken) {
+    if (!access_token) {
       throw new Error("Token de acesso não foi retornado pela API");
     }
 
-    return accessToken;
+    // Salva token e tempo de expiração (com margem de segurança de 5s)
+    cachedToken = access_token;
+    expiresAt = now + expires_in * 1000 - 5000;
+
+    return cachedToken!;
   } catch (error: any) {
     console.error(
       "[Erro ao obter token]",
