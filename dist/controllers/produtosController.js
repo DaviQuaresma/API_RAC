@@ -10,21 +10,33 @@ const authService_1 = require("../services/authService");
 const axiosInstance_1 = __importDefault(require("../services/axiosInstance"));
 const fallback_1 = require("../utils/fallback");
 const produtoSchema_1 = require("../schemas/produtoSchema");
+const url_1 = require("url");
 async function listarProdutos(req, res) {
     try {
         const token = await (0, authService_1.getAccessToken)();
-        const query = new URLSearchParams({
-            limit: "1000",
-            ...req.query,
-        }).toString();
-        const { data } = await axiosInstance_1.default.get(`${process.env.EGESTOR_API_URL}/v1/produtos?${query}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        const produtos = data?.data || data || [];
-        return res.status(200).json(produtos);
+        const limit = 50;
+        let page = 1;
+        let todosProdutos = [];
+        while (true) {
+            const query = new url_1.URLSearchParams({
+                limit: limit.toString(),
+                page: page.toString(),
+                ...req.query,
+            }).toString();
+            const { data } = await axiosInstance_1.default.get(`${process.env.EGESTOR_API_URL}/v1/produtos?${query}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            const lote = data?.data || [];
+            todosProdutos = todosProdutos.concat(lote);
+            // Verifica se já chegou na última página
+            if (data.current_page >= data.last_page)
+                break;
+            page += 1;
+        }
+        return res.status(200).json(todosProdutos);
     }
     catch (error) {
         console.error("[Erro ao listar produtos]", error.response?.data || error.message);
