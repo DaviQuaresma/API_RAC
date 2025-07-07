@@ -2,29 +2,26 @@ import fs from "fs";
 import path from "path";
 
 const logsDir = path.resolve(process.cwd(), "logs");
-const fallbackPath = path.resolve(logsDir, "fallback.json");
 
-export function salvarFallback(produto: any) {
+export function salvarFallback(tipo: "produto" | "venda", data: any) {
   try {
     if (!fs.existsSync(logsDir)) {
       console.log("⚙ Criando pasta logs...");
       fs.mkdirSync(logsDir, { recursive: true });
     }
 
+    const fallbackPath = path.resolve(logsDir, `fallback-${tipo}.json`);
+
     const fallbackAtual = fs.existsSync(fallbackPath)
       ? JSON.parse(fs.readFileSync(fallbackPath, "utf-8"))
       : [];
 
-    fallbackAtual.push(produto);
+    fallbackAtual.push(data);
 
     fs.writeFileSync(fallbackPath, JSON.stringify(fallbackAtual, null, 2));
 
-    console.log(
-      `📦 Produto salvo no fallback: ${
-        produto.codigoProprio || produto.codigo || "sem código"
-      }`
-    );
+    console.log(`💾 Fallback salvo (${tipo}): ${JSON.stringify(data)}`);
   } catch (err) {
-    console.error("[ERRO ao salvar fallback]", err);
+    console.error(`[ERRO ao salvar fallback - ${tipo}]`, err);
   }
 }

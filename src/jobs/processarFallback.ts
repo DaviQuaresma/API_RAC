@@ -4,11 +4,9 @@ import axiosInstance from "../services/axiosInstance";
 import { getAccessToken } from "../services/authService";
 import { ProdutoSchema } from "../schemas/produtoSchema";
 
-// Em vez de __dirname, que aponta pro dist/jobs
-const logsDir = path.join(process.cwd(), 'logs');
-const fallbackPath = path.join(logsDir, 'fallback.json');
+const logsDir = path.join(process.cwd(), "logs");
+const fallbackPath = path.join(logsDir, "fallback.json");
 
-// Garante que o diretório exista
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
@@ -21,11 +19,11 @@ export async function processarFallback(): Promise<void> {
     return;
   }
 
-  const fallbackRaw = fs.readFileSync(fallbackPath, "utf-8");
-  let fallbackData = [];
+  let fallbackData: any[] = [];
 
   try {
-    fallbackData = JSON.parse(fallbackRaw);
+    const raw = fs.readFileSync(fallbackPath, "utf-8");
+    fallbackData = JSON.parse(raw);
   } catch (e) {
     console.error("[Fallback] JSON mal formatado:", e);
     return;
@@ -44,49 +42,68 @@ export async function processarFallback(): Promise<void> {
 
   const novosFallbacks = [];
 
-  for (const produto of fallbackData) {
+  for (const item of fallbackData) {
     try {
-      const valid = ProdutoSchema.safeParse(produto);
+      // 🔍 Heurística simples para saber se é produto ou venda
+      const isProduto = ProdutoSchema.safeParse(item).success;
+      const isVenda = item?.codContato && item?.produtos?.length;
 
-      if (!valid.success) {
-        console.warn(
-          `[Fallback] Produto inválido ignorado: ${produto.codigoProprio}`
+      if (isProduto) {
+        const endpoint = item.codigo
+          ? `${process.env.EGESTOR_API_URL}/v1/produtos/${item.codigo}`
+          : `${process.env.EGESTOR_API_URL}/v1/produtos`;
+
+        const method = item.codigo ? "put" : "post";
+        const payload = item.codigo ? { ...item, codigo: undefined } : item;
+
+        const { data } = await axiosInstance[method](endpoint, payload, {
+          headers,
+        });
+
+        console.log(
+          `✅ Produto reprocessado: ${item.codigoProprio} (${data.codigo})`
         );
-        continue;
+      } else if (isVenda) {
+        const vendaResponse = await axiosInstance.post(
+          `${process.env.EGESTOR_API_URL}/v1/vendas`,
+          item,
+          { headers }
+        );
+
+        const codigoVenda = vendaResponse.data.codigo;
+
+        // Tenta gerar NFC-e após criação
+        await axiosInstance.post(
+          `${process.env.EGESTOR_API_URL}/v1/vendas/${codigoVenda}/gerarNfce`,
+          {
+            cpfcnpj: item?.cpfcnpj || 12345678912,
+            indPres: item?.indPres || 1,
+            codTransportadora: item?.codTransportadora || 0,
+          },
+          { headers }
+        );
+
+        console.log(`✅ Venda reprocessada: ${codigoVenda}`);
+      } else {
+        console.warn("[Fallback] Tipo de item não reconhecido:", item);
+        novosFallbacks.push(item);
       }
-
-      const endpoint = produto.codigo
-        ? `${process.env.EGESTOR_API_URL}/v1/produtos/${produto.codigo}`
-        : `${process.env.EGESTOR_API_URL}/v1/produtos`;
-
-      const method = produto.codigo ? "put" : "post";
-      const payload = produto.codigo
-        ? { ...produto, codigo: undefined }
-        : produto;
-
-      const { data } = await axiosInstance[method](endpoint, payload, {
-        headers,
-      });
-
-      console.log(
-        ` Fallback reprocessado: ${produto.codigoProprio} (${data.codigo})`
-      );
     } catch (err: any) {
       console.error(
-        `[Fallback] Falha ao reenviar ${produto.codigoProprio}:`,
+        "[Fallback] Falha ao reenviar item:",
         err?.response?.data || err.message
       );
-      novosFallbacks.push(produto); // Reinsere para tentar depois
+      novosFallbacks.push(item); // Mantém para nova tentativa depois
     }
   }
 
   if (novosFallbacks.length > 0) {
     fs.writeFileSync(fallbackPath, JSON.stringify(novosFallbacks, null, 2));
-    console.log(`[Fallback] ${novosFallbacks.length} produtos ainda com erro.`);
+    console.log(`[Fallback] ${novosFallbacks.length} itens ainda com erro.`);
   } else {
     fs.unlinkSync(fallbackPath);
     console.log(
-      "[Fallback] Todos os produtos processados com sucesso. Arquivo removido."
+      "[Fallback] Todos os itens processados com sucesso. Arquivo removido."
     );
   }
 }

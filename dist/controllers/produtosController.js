@@ -67,7 +67,7 @@ async function criarProduto(req, res) {
     }
     catch (error) {
         console.error("[Erro ao criar produto]", error.response?.data || error.message);
-        (0, fallback_1.salvarFallback)(req.body);
+        (0, fallback_1.salvarFallback)("produto", req.body);
         return res.status(error?.response?.status || 500).json({
             error: "Erro ao criar produto no eGestor",
             details: error?.response?.data || null,
@@ -92,7 +92,7 @@ async function atualizarProduto(req, res) {
     }
     catch (error) {
         console.error("[Erro ao atualizar produto]", error.response?.data || error.message);
-        (0, fallback_1.salvarFallback)(req.body);
+        (0, fallback_1.salvarFallback)("produto", req.body);
         return res.status(error?.response?.status || 500).json({
             error: "Erro ao atualizar produto no eGestor",
             details: error?.response?.data || null,

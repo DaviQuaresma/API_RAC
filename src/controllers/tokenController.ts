@@ -11,7 +11,13 @@ export default async function validarToken(
     return res.status(400).json({ erro: "Token não fornecido" });
   }
 
-  const configPath = path.resolve(__dirname, "../config/config.json");
+  const configDir = path.resolve(__dirname, "../config");
+  const configPath = path.join(configDir, "config.json");
+
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
+  }
+
   fs.writeFileSync(
     configPath,
     JSON.stringify({ egestorToken: token }, null, 2)

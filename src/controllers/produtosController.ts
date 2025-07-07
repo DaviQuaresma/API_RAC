@@ -85,7 +85,7 @@ export async function criarProduto(req: Request, res: Response): Promise<any> {
       "[Erro ao criar produto]",
       error.response?.data || error.message
     );
-    salvarFallback(req.body);
+    salvarFallback("produto", req.body);
     return res.status(error?.response?.status || 500).json({
       error: "Erro ao criar produto no eGestor",
       details: error?.response?.data || null,
@@ -124,7 +124,7 @@ export async function atualizarProduto(
       "[Erro ao atualizar produto]",
       error.response?.data || error.message
     );
-    salvarFallback(req.body);
+    salvarFallback("produto", req.body);
     return res.status(error?.response?.status || 500).json({
       error: "Erro ao atualizar produto no eGestor",
       details: error?.response?.data || null,

@@ -1,0 +1,27 @@
+[
+  {
+    "descricao": "LIP TINT 3 EM 1 COR 501 C/36 00831",
+    "codigoProprio": "831",
+    "codCategoria": 1,
+    "estoque": 1,
+    "estoqueMinimo": 0,
+    "controlarEstoque": true,
+    "margemLucro": 0,
+    "precoCusto": 16.18,
+    "precoVenda": 21.04,
+    "origemFiscal": 0,
+    "unidadeTributada": "DIS",
+    "refEanGtin": "SEM GTIN",
+    "ncm": "",
+    "codigoCEST": "",
+    "excecaoIPI": 7,
+    "codigoGrupoTributos": 0,
+    "anotacoesNFE": "",
+    "anotacoesInternas": "",
+    "pesoBruto": 0,
+    "pesoLiquido": 0,
+    "tags": [
+      "sincronizado"
+    ]
+  }
+]

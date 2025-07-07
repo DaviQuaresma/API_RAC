@@ -1,0 +1,226 @@
+[
+  {
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      },
+      {
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  }
+]
