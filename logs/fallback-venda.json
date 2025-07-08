@@ -222,5 +222,160 @@
         ]
       }
     ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 30,
+        "codProprio": "2643",
+        "obs": ""
+      },
+      {
+        "codProduto": 24,
+        "codProprio": "2637",
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 42,
+        "codProprio": "1906",
+        "obs": ""
+      },
+      {
+        "codProduto": 36,
+        "codProprio": "2650",
+        "obs": ""
+      },
+      {
+        "codProduto": 107,
+        "codProprio": "1110",
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 84,
+        "codProprio": "2001",
+        "obs": ""
+      },
+      {
+        "codProduto": 147,
+        "codProprio": "442",
+        "obs": ""
+      },
+      {
+        "codProduto": 34,
+        "codProprio": "2648",
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 84,
+        "codProprio": "2001",
+        "obs": ""
+      },
+      {
+        "codProduto": 147,
+        "codProprio": "442",
+        "obs": ""
+      },
+      {
+        "codProduto": 34,
+        "codProprio": "2648",
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
   }
 ]

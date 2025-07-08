@@ -20,38 +20,48 @@ async function criarVenda(req, res) {
                 mensagem: "Dados obrigatórios faltando (codContato ou produtos)",
             });
         }
-        // 1. Valida produtos e estoque antes de criar a venda
+        // 1. Buscar todos os produtos do eGestor
         const { data } = await axiosInstance_1.default.get(`${process.env.EGESTOR_API_URL}/v1/produtos?limit=1000`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log("[DEBUG] Resposta de /v1/produtos:", data[0]);
-        const produtosRemotos = Array.isArray(data.data)
-            ? data.data
-            : Array.isArray(data)
-                ? data
-                : [];
-        if (!produtosRemotos.length) {
-            throw new Error("Não foi possível obter a lista de produtos do eGestor");
+        // Compatibiliza formato de resposta
+        let produtosRemotos = [];
+        if (Array.isArray(data)) {
+            produtosRemotos = data;
         }
-        if (!Array.isArray(produtosRemotos)) {
-            throw new Error("Formato inválido de resposta da API: produtos não é um array");
+        else if (Array.isArray(data?.data)) {
+            produtosRemotos = data.data;
         }
-        for (const item of produtosDaVenda) {
-            const remoto = produtosRemotos.find((p) => p.codigo === item.codProduto);
+        else if (Array.isArray(data?.itens)) {
+            produtosRemotos = data.itens;
+        }
+        else {
+            throw new Error("Formato inesperado de resposta da API de produtos.");
+        }
+        console.log("[DEBUG] Total de produtos remotos:", produtosRemotos.length);
+        // 2. Validação dos produtos enviados
+        const produtosTratados = produtosDaVenda.map((item) => {
+            const remoto = produtosRemotos.find((p) => p.codigoProprio?.toString() === item.codProprio?.toString() ||
+                p.codigo?.toString() === item.codProduto?.toString());
             if (!remoto) {
-                return res.status(404).json({
-                    mensagem: `Produto não encontrado no eGestor: ${item.codProduto}`,
-                });
+                throw new Error(`Produto não encontrado no eGestor: ${item.codProduto}`);
             }
             if (item.quant > remoto.estoque) {
-                return res.status(400).json({
-                    mensagem: `Estoque insuficiente no eGestor para o produto ${remoto.descricao} (ID ${item.codProduto})`,
-                });
+                throw new Error(`Estoque insuficiente para o produto ${remoto.descricao} (ID ${item.codProduto})`);
             }
-        }
-        // 2. Cria a venda
+            return {
+                codProduto: remoto.codigo,
+                quant: item.quant || 1,
+                preco: item.preco || remoto.precoVenda || 1,
+                vDesc: 0,
+                deducao: 0,
+                obs: item.obs || "",
+            };
+        });
+        vendaPayload.produtos = produtosTratados;
+        // 3. Criar a venda
         const vendaResponse = await axios_1.default.post(`${process.env.EGESTOR_API_URL}/v1/vendas`, vendaPayload, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -59,7 +69,7 @@ async function criarVenda(req, res) {
             },
         });
         const codigoVenda = vendaResponse.data.codigo;
-        // 3. Gera a NFC-e
+        // 4. Gerar NFC-e
         const nfceResponse = await axios_1.default.post(`${process.env.EGESTOR_API_URL}/v1/vendas/${codigoVenda}/gerarNfce`, {
             cpfcnpj: vendaPayload?.cpfcnpj || 12345678912,
             indPres: vendaPayload?.indPres || 1,
@@ -78,7 +88,7 @@ async function criarVenda(req, res) {
     }
     catch (error) {
         console.error("[Erro criarVenda]", error?.response?.data || error.message);
-        // Fallback da venda
+        // Salvar fallback local para recuperar venda
         (0, fallback_1.salvarFallback)("venda", vendaPayload);
         return res.status(error?.response?.status || 500).json({
             mensagem: "Erro ao criar venda ou gerar NFC-e",
