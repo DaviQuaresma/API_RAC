@@ -377,5 +377,216 @@
         ]
       }
     ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorDesc": 0,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 11,
+        "codProprio": "2586",
+        "obs": ""
+      },
+      {
+        "codProduto": 103,
+        "codProprio": "1104",
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorDesc": 0,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 84,
+        "obs": ""
+      },
+      {
+        "codProduto": 40,
+        "obs": ""
+      },
+      {
+        "codProduto": 103,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorDesc": 0,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 42,
+        "quant": 1,
+        "preco": 4.4551,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      },
+      {
+        "codProduto": 36,
+        "quant": 1,
+        "preco": 2.47,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      },
+      {
+        "codProduto": 103,
+        "quant": 1,
+        "preco": 0.78,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorDesc": 0,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 14,
+        "quant": 1,
+        "preco": 6.63,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      },
+      {
+        "codProduto": 52,
+        "quant": 1,
+        "preco": 3.4788,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "situacao": 50,
+    "valorDesc": 0,
+    "valorFrete": 0,
+    "clienteFinal": 1,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "produtos": [
+      {
+        "codProduto": 52,
+        "quant": 1,
+        "preco": 3.4788,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      },
+      {
+        "codProduto": 35,
+        "quant": 1,
+        "preco": 0.7573,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "dtVenc": "2025-07-09",
+        "dtComp": "2025-07-09",
+        "dtCredito": "2025-07-10",
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "descricao": "Venda via Electron",
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ]
+      }
+    ]
   }
 ]

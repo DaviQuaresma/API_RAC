@@ -20,48 +20,44 @@ async function criarVenda(req, res) {
                 mensagem: "Dados obrigatórios faltando (codContato ou produtos)",
             });
         }
-        // 1. Buscar todos os produtos do eGestor
-        const { data } = await axiosInstance_1.default.get(`${process.env.EGESTOR_API_URL}/v1/produtos?limit=1000`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        // Compatibiliza formato de resposta
-        let produtosRemotos = [];
-        if (Array.isArray(data)) {
-            produtosRemotos = data;
-        }
-        else if (Array.isArray(data?.data)) {
-            produtosRemotos = data.data;
-        }
-        else if (Array.isArray(data?.itens)) {
-            produtosRemotos = data.itens;
-        }
-        else {
-            throw new Error("Formato inesperado de resposta da API de produtos.");
-        }
-        console.log("[DEBUG] Total de produtos remotos:", produtosRemotos.length);
-        // 2. Validação dos produtos enviados
-        const produtosTratados = produtosDaVenda.map((item) => {
-            const remoto = produtosRemotos.find((p) => p.codigoProprio?.toString() === item.codProprio?.toString() ||
-                p.codigo?.toString() === item.codProduto?.toString());
-            if (!remoto) {
-                throw new Error(`Produto não encontrado no eGestor: ${item.codProduto}`);
+        const produtosTratados = [];
+        for (const item of produtosDaVenda) {
+            const codProduto = item.codProduto?.toString();
+            if (!codProduto) {
+                throw new Error("Produto sem código (codProduto ausente)");
+            }
+            let remoto;
+            try {
+                const { data } = await axiosInstance_1.default.get(`${process.env.EGESTOR_API_URL}/v1/produtos?filtro=${codProduto}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                remoto = data?.data?.[0];
+                if (!remoto || remoto.codigo.toString() !== codProduto) {
+                    throw new Error(`Produto ${codProduto} não encontrado via filtro`);
+                }
+                console.log(`[DEBUG] Produto ${codProduto} encontrado: ${remoto.descricao}`);
+            }
+            catch (err) {
+                console.warn(`[ERRO] Produto não encontrado ou erro na API: ${codProduto}`);
+                throw new Error(`Produto não encontrado no eGestor: ${codProduto}`);
             }
             if (item.quant > remoto.estoque) {
-                throw new Error(`Estoque insuficiente para o produto ${remoto.descricao} (ID ${item.codProduto})`);
+                throw new Error(`Estoque insuficiente para o produto ${remoto.descricao} (ID ${remoto.codigo})`);
             }
-            return {
+            produtosTratados.push({
                 codProduto: remoto.codigo,
                 quant: item.quant || 1,
                 preco: item.preco || remoto.precoVenda || 1,
                 vDesc: 0,
                 deducao: 0,
                 obs: item.obs || "",
-            };
-        });
+            });
+        }
         vendaPayload.produtos = produtosTratados;
-        // 3. Criar a venda
+        console.log("Payload montado:");
+        console.log(JSON.stringify(vendaPayload, null, 2));
+        console.log("Payload produtosTratados:");
+        console.log(JSON.stringify(produtosTratados, null, 2));
         const vendaResponse = await axios_1.default.post(`${process.env.EGESTOR_API_URL}/v1/vendas`, vendaPayload, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -69,7 +65,6 @@ async function criarVenda(req, res) {
             },
         });
         const codigoVenda = vendaResponse.data.codigo;
-        // 4. Gerar NFC-e
         const nfceResponse = await axios_1.default.post(`${process.env.EGESTOR_API_URL}/v1/vendas/${codigoVenda}/gerarNfce`, {
             cpfcnpj: vendaPayload?.cpfcnpj || 12345678912,
             indPres: vendaPayload?.indPres || 1,
@@ -88,7 +83,6 @@ async function criarVenda(req, res) {
     }
     catch (error) {
         console.error("[Erro criarVenda]", error?.response?.data || error.message);
-        // Salvar fallback local para recuperar venda
         (0, fallback_1.salvarFallback)("venda", vendaPayload);
         return res.status(error?.response?.status || 500).json({
             mensagem: "Erro ao criar venda ou gerar NFC-e",
