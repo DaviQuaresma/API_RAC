@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
     "build": "tsc",
-    "postbuild": "node dist/utils/postbuild.js"
+    "start": "node ./dist/index.js",
+    "prisma": "prisma",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +26,9 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.5",
+    "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }
 }
