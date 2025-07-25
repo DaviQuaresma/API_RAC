@@ -588,5 +588,152 @@
         ]
       }
     ]
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "dtVenda": "2025-07-24",
+    "dtEntrega": "2025-07-24",
+    "situacao": 50,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "valorFrete": 0,
+    "valorDesc": 0,
+    "valorDespesasAcessorias": 0,
+    "clienteFinal": 1,
+    "enderecoEntrega": 1,
+    "situacaoOS": "Em espera",
+    "customizado": {
+      "xCampo1": "",
+      "xCampo2": "",
+      "xCampo3": "",
+      "xCampo4": ""
+    },
+    "produtos": [
+      {
+        "codProduto": 805,
+        "quant": 6,
+        "preco": 5,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "dtVenc": "2025-07-24",
+        "dtComp": "2025-07-25",
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "valor": 30,
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ],
+        "descricao": "Cobrança da venda via Electron"
+      }
+    ],
+    "despesas": []
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "dtVenda": "2025-07-24",
+    "dtEntrega": "2025-07-24",
+    "situacao": 50,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "valorFrete": 0,
+    "valorDesc": 0,
+    "valorDespesasAcessorias": 0,
+    "clienteFinal": 1,
+    "enderecoEntrega": 1,
+    "situacaoOS": "Em espera",
+    "customizado": {
+      "xCampo1": "",
+      "xCampo2": "",
+      "xCampo3": "",
+      "xCampo4": ""
+    },
+    "produtos": [
+      {
+        "codProduto": 805,
+        "quant": 6,
+        "preco": 5,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "dtVenc": "2025-07-24",
+        "dtComp": "2025-07-25",
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "valor": 30,
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ],
+        "descricao": "Cobrança da venda via Electron"
+      }
+    ],
+    "despesas": []
+  },
+  {
+    "codContato": 1,
+    "codVendedor": 1,
+    "dtVenda": "2025-07-24",
+    "dtEntrega": "2025-07-24",
+    "situacao": 50,
+    "tags": [
+      "VENDA_VIA_ELECTRON"
+    ],
+    "valorFrete": 0,
+    "valorDesc": 0,
+    "valorDespesasAcessorias": 0,
+    "clienteFinal": 1,
+    "enderecoEntrega": 1,
+    "situacaoOS": "Em espera",
+    "customizado": {
+      "xCampo1": "",
+      "xCampo2": "",
+      "xCampo3": "",
+      "xCampo4": ""
+    },
+    "produtos": [
+      {
+        "codProduto": 429,
+        "quant": 7,
+        "preco": 4.2856,
+        "vDesc": 0,
+        "deducao": 0,
+        "obs": ""
+      }
+    ],
+    "financeiros": [
+      {
+        "dtVenc": "2025-07-24",
+        "dtComp": "2025-07-25",
+        "pago": true,
+        "codFormaPgto": 1,
+        "codPlanoContas": 1,
+        "codCaixa": 1,
+        "valor": 29.9992,
+        "tags": [
+          "AUTOMATICA",
+          "API"
+        ],
+        "descricao": "Cobrança da venda via Electron"
+      }
+    ],
+    "despesas": []
   }
 ]

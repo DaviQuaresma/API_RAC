@@ -11,6 +11,8 @@ export default async function validarToken(
     return res.status(400).json({ erro: "Token não fornecido" });
   }
 
+  console.log("Validando token:", token);
+
   const configDir = path.resolve(__dirname, "../config");
   const configPath = path.join(configDir, "config.json");
 
@@ -23,5 +25,8 @@ export default async function validarToken(
     JSON.stringify({ egestorToken: token }, null, 2)
   );
 
-  res.status(200).json({ mensagem: "Token atualizado com sucesso" });
+  res.status(200).json({
+    mensagem: "Token atualizado com sucesso",
+    token,
+  });
 }

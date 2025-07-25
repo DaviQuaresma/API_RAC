@@ -5,11 +5,7 @@
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
     "build": "tsc",
-    "start": "node ./dist/index.js",
-    "prisma": "prisma",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:generate": "npx prisma generate",
-    "postinstall": "prisma generate"
+    "start": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
