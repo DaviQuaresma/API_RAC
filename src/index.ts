@@ -22,7 +22,7 @@ app.get("/health", (_, res) => {
   res.status(200).send("API Middleware online");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Middleware rodando na porta ${PORT}`);
 });

@@ -42,6 +42,10 @@ docker compose exec <serviço> env | grep VARIAVEL
 
 # Entrar no container para testar
 docker exec -it <nome_do_container> bash
+winpty docker exec -it <container-id> //bin//sh
+
+# Entrar no banco de dados
+docker exec -it postgres_db psql -U rodrigoAra -d databases
 
 # Dentro do container, conectar no banco PostgreSQL
 psql -U <usuario> -d <nome_do_banco>
