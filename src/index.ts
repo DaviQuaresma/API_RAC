@@ -5,6 +5,7 @@ import validacaoRoutes from "./routes/validacaoRoutes";
 import vendaRoutes from "./routes/vendaRoutes";
 import tokenRoutes from "./routes/tokenRoutes";
 import fallbackRoutes from "./routes/fallbackRoutes";
+import contactRoutes from "./routes/contactRoutes";
 import "./jobs/fallbackScheduler";
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use("/api", validacaoRoutes);
 app.use("/api", vendaRoutes);
 app.use("/api", tokenRoutes);
 app.use("/api", fallbackRoutes);
+app.use("/api", contactRoutes);
 
 app.get("/health", (_, res) => {
   res.status(200).send("API Middleware online");

@@ -73,12 +73,6 @@ export async function criarVenda(req: Request, res: Response): Promise<any> {
 
     vendaPayload.produtos = produtosTratados;
 
-    console.log("Payload montado:");
-    console.log(JSON.stringify(vendaPayload, null, 2));
-
-    console.log("Payload produtosTratados:");
-    console.log(JSON.stringify(produtosTratados, null, 2));
-
     const vendaResponse = await axios.post(
       `${process.env.EGESTOR_API_URL}/v1/vendas`,
       vendaPayload,
@@ -89,6 +83,13 @@ export async function criarVenda(req: Request, res: Response): Promise<any> {
         },
       }
     );
+
+    const erroMsg = vendaResponse.data.errMsg
+    const erroObs = vendaResponse.data.errObs
+
+    if (erroMsg || erroObs) {
+      throw new Error(`Erro: \n${erroMsg}\n Erro observação: \n${erroObs}`);
+    }
 
     const codigoVenda = vendaResponse.data.codigo;
 
